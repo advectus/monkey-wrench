@@ -92,7 +92,7 @@ GRANITE_XP_TABLES_B = [
 GRANITE_XP_TABLES_A = (GRANITE_XP_TABLES.dup << GRANITE_XP_DIFF_A).flatten.sort
 
 puts "Start"
-file = gets
+file = STDIN.gets.chomp
 
 count = 0
 ic = Iconv.new('UTF-8//IGNORE', 'UTF-8') #Invalid byte sequenece string conversion
