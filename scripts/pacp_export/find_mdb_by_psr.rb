@@ -17,13 +17,13 @@ mdbs = Dir["#{mdb_workspace}**/*.mdb"].collect{|file| {:id=>count+=1, :file=>fil
 
 # add observation media array to mdb hash
 mdbs.each do |mdb|
-	mdb[:inspection_data] = `mdb-export "#{mdb_workspace}#{mdb[:file]}" "Inspections"`.split(",").reject{|d| d==""}.collect{|d| d}
+    mdb[:inspection_data] = `mdb-export "#{mdb_workspace}#{mdb[:file]}" "Inspections"`.split(",").reject{|d| d==""}.collect{|d| d}
     mdb[:discovered] = false
     # loop over all inspection_data
     mdb[:inspection_data].each do |data|
-        if data.to_s.include? "#{query}" or query.to_s.include? data.to_s
+        if data.to_s.gsub('"','') == query       
             mdb[:discovered] = true
-            matching_mdbs << mdb[:file]
+            matching_mdbs << mdb[:file] if not matching_mdbs.include? mdb[:file]
         end
     end
 end
